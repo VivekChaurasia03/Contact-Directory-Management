@@ -24,5 +24,7 @@ target/
 
 src/main/resources/static/css/output.css
 
+env.properties
+
 DailyLog.txt
 node_modules
