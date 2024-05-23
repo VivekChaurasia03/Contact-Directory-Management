@@ -1,0 +1,5 @@
+npx tailwindcss -i src/main/resources/static/css/input.css -o src/main/resources/static/css/output.css --watch
+
+Using generated security password: b2e80f1d-19d7-4d42-aebf-569921751bd9
+
+Good Spring Security Article - https://xinghua24.github.io/SpringSecurity/Spring-Security-Form-Login/
