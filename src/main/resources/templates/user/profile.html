@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title}, ~{::script})}">
 <head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
+    <title th:text="${loggedInUser.name} + ' | Profile'">Profile Page</title>
 </head>
 <body>
-<h1>This is user profile page</h1>
-<h3 th:text="${loggedInUser.name}"></h3>
-<p th:text="${loggedInUser.about}"></p>
+<div id="content">
+    <!--  Sidebar  -->
+    <div th:if="${loggedInUser}">
+        <div th:replace="~{user/sidebar :: sidebar}"></div>
+    </div>
+
+    <div class="sm:pl-64 pt-20" style="height: 1000px">
+        <div class="flex justify-center flex-col items-center">
+            <h1 class="text-5xl">Welcome to Profile Page</h1>
+            <p>User Profile Page</p>
+        </div>
+    </div>
+</div>
+<script>
+    console.log("Profile Page")
+</script>
 </body>
 </html>
