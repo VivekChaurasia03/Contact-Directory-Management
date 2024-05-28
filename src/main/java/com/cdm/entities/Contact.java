@@ -23,6 +23,7 @@ public class Contact {
     private String phoneNumber;
     private String address;
     private String picture;
+    private String cloudinaryImagePublicId;
 
     @Column(length = 1000)
     private String description;

@@ -19,13 +19,13 @@
                     <h1 class="text-2xl font-semibold">Add New Contact</h1>
                     <p class="text-gray-400">This contact will be saved on the Cloud......</p>
                     <!-- Contact Form -->
-                    <form class="mt-8" th:action="@{'/user/contacts/add'}" th:object="${contactForm}" method="post">
+                    <form class="mt-8" th:action="@{'/user/contacts/add'}" th:object="${contactForm}" method="post" enctype="multipart/form-data">
                         <!-- Name -->
                         <div class="mb-3">
                             <label for="name"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
                                 Name</label>
-                            <div class="relative mb-6">
+                            <div class="relative mb-1">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <i class="fa-solid fa-user w-4 h-4"></i>
                                 </div>
@@ -33,14 +33,15 @@
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="Full Name">
                             </div>
-                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-red-600 px-1 py-2"></p>
+                            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                               class="text-red-600 px-1 py-2"></p>
                         </div>
                         <!-- Email -->
                         <div class="mb-3">
                             <label for="email"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
                                 Email</label>
-                            <div class="relative mb-6">
+                            <div class="relative mb-1">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
@@ -52,14 +53,15 @@
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="abc@gmail.com">
                             </div>
-                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-600 px-1 py-2"></p>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                               class="text-red-600 px-1 py-2"></p>
                         </div>
                         <!-- Phone number -->
                         <div class="mb-3">
                             <label for="phoneNumber"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact Phone
                                 number</label>
-                            <div class="relative mb-6">
+                            <div class="relative mb-1">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <i class="fa-solid fa-phone w-4 h-4"></i>
                                 </div>
@@ -67,7 +69,8 @@
                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="Phone number">
                             </div>
-                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" class="text-red-600 px-1 py-2"></p>
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                               class="text-red-600 px-1 py-2"></p>
                         </div>
                         <!-- Contact Address -->
                         <div class="mb-3">
@@ -78,7 +81,8 @@
                             <textarea id="address" rows="4" th:field="*{address}"
                                       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                       placeholder="Contact Address"></textarea>
-                            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-red-600 px-1 py-2"></p>
+                            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+                               class="text-red-600 px-1 py-2"></p>
                         </div>
                         <!-- Contact Description -->
                         <div class="mb-3">
@@ -89,7 +93,8 @@
                             <textarea id="description" rows="4" th:field="*{description}"
                                       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                       placeholder="Write about your contact...."></textarea>
-                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-red-600 px-1 py-2"></p>
+                            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                               class="text-red-600 px-1 py-2"></p>
                         </div>
 
                         <!-- Social Links -->
@@ -121,13 +126,14 @@
                         </div>
                         <!-- Contact Image -->
                         <div class="mb-3">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                   for="file_input">Contact Image</label>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+                                Image</label>
                             <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                   aria-describedby="file_input_help" id="file_input" type="file">
+                                   aria-describedby="file_input_help" id="image_file_input" th:field="*{contactImage}" type="file">
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG or
                                 JPG
                                 (MAX. 800x400px).</p>
+                            <img class="max-h-52 mx-auto rounded-lg shadow m-3" src="" id="upload_image_preview" alt="">
                         </div>
                         <!-- Is Favourite -->
                         <div class="mb-3">
@@ -156,8 +162,9 @@
         </div>
     </div>
 </div>
+<script th:src="@{'/js/admin.js'}"></script>
 <script>
-    console.log("Dashboard Page")
+    console.log("Add Contact Page")
 </script>
 </body>
 </html>

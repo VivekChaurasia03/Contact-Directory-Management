@@ -20,20 +20,22 @@ public class ContactForm {
     @Size(min = 3, message = "Min 3 characters required")
     private String name;
 
-    @NotBlank(message = "Email is required")
+    @NotBlank(message = "Contact Email is required")
     @Email(message = "Invalid Email Address")
     private String email;
 
-    @Pattern(regexp = "^\\+?[0-9]{1,3}[-.\\s]?(?:\\([0-9]{1,6}\\)[-\\s]?)?[0-9]{3,14}(?:[-.\\s]?[0-9]{3,14}){1,2}$",
+    @NotBlank(message = "Contact Phone Number is required")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$",
             message = "Invalid phone number")
     private String phoneNumber;
 
-    @NotBlank(message = "Address is required")
+    @NotBlank(message = "Contact Address is required")
     private String address;
 
-    private MultipartFile profileImage;
+    // Creating a custom annotation to validate the files - size, resolutions
+    private MultipartFile contactImage;
 
-    @NotBlank(message = "Description is required")
+    @NotBlank(message = "Contact Description is required")
     private String description;
 
     private boolean favourite = false;

@@ -32,8 +32,8 @@ public class UserForm {
     @NotBlank(message = "About is required")
     private String about;
 
-    @Pattern(regexp = "^\\+?[0-9]{1,3}[-.\\s]?(?:\\([0-9]{1,6}\\)[-\\s]?)?[0-9]{3,14}(?:[-.\\s]?[0-9]{3,14}){1,2}$",
+    @NotBlank(message = "Phone Number is required")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$",
             message = "Invalid phone number")
     private String phoneNumber;
 }
-
