@@ -7,7 +7,7 @@
 <div id="content">
     <!--  Sidebar  -->
     <div th:if="${loggedInUser}">
-        <div th:replace="~{user/sidebar :: sidebar}"></div>
+        <div th:replace="~{user/sidebar :: sidebar(${contactListSize})}"></div>
     </div>
 
     <div class="sm:pl-64 pt-20" style="height: 1000px">

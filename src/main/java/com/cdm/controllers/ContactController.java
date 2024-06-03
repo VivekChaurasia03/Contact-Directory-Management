@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -58,7 +60,7 @@ public class ContactController {
         // Fetched the form data - ContactForm
         // System.out.println(contactForm);
 
-        // TODO: Validate the data
+        // Validate the data
         if (bindingResult.hasErrors()) {
             Message message = Message.builder().content("Please correct the following error").type(MessageType.red).build();
             session.setAttribute("message", message);
@@ -76,7 +78,21 @@ public class ContactController {
         session.setAttribute("message", message);
 
         // Redirect to login page
-        return "redirect:/user/contacts/add";
+        return "redirect:/user/contacts";
+    }
+
+    @GetMapping
+    public String viewContacts(Model model, Authentication authentication) {
+        // Load all the contacts using the provided userId
+        String userName = EmailHelper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(userName);
+        Optional<List<Contact>> contactListOptional = contactService.getContactByUser(user);
+
+        if (contactListOptional.isPresent()) {
+            List<Contact> contactList = contactListOptional.get();
+            model.addAttribute("contacts", contactList);
+        }
+        return "user/all_contacts";
     }
 
     private Contact getContactToSave(ContactForm contactForm, Authentication authentication) throws IOException {

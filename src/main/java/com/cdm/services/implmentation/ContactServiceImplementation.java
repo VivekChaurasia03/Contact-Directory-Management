@@ -51,7 +51,7 @@ public class ContactServiceImplementation implements ContactService {
 
     @Override
     public Optional<List<Contact>> getContactByUser(User user) {
-        return Optional.empty();
+        return contactRepository.findByUser(user);
     }
 
     @Override
