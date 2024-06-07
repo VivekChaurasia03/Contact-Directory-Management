@@ -7,6 +7,10 @@ import com.cdm.helpers.ResourceNotFoundException;
 import com.cdm.repositories.ContactRepository;
 import com.cdm.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +56,14 @@ public class ContactServiceImplementation implements ContactService {
     @Override
     public Optional<List<Contact>> getContactByUser(User user) {
         return contactRepository.findByUser(user);
+    }
+
+    // Method overloading for pagination
+    @Override
+    public Optional<Page<Contact>> getContactByUser(User user, int page, int size, String sortField, String direction) {
+        Sort sort = direction.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepository.findByUser(user, pageable);
     }
 
     @Override

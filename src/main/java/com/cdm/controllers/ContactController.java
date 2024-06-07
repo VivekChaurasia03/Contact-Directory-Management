@@ -14,19 +14,19 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.cdm.helpers.AppConstants.PAGE_SIZE;
 
 @Controller
 @RequestMapping("/user/contacts")
@@ -77,20 +77,28 @@ public class ContactController {
         Message message = Message.builder().content("Contact Saved Successfully").type(MessageType.green).build();
         session.setAttribute("message", message);
 
-        // Redirect to login page
-        return "redirect:/user/contacts";
+        // Redirect to add contact page
+        return "redirect:/user/contacts/add";
     }
 
     @GetMapping
-    public String viewContacts(Model model, Authentication authentication) {
+    public String viewContacts(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortField", defaultValue = "name") String sortField,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model,
+            Authentication authentication) {
+
         // Load all the contacts using the provided userId
         String userName = EmailHelper.getEmailOfLoggedInUser(authentication);
         User user = userService.getUserByEmail(userName);
-        Optional<List<Contact>> contactListOptional = contactService.getContactByUser(user);
+        Optional<Page<Contact>> contactPageOptional = contactService.getContactByUser(user, page, size, sortField, direction);
 
-        if (contactListOptional.isPresent()) {
-            List<Contact> contactList = contactListOptional.get();
-            model.addAttribute("contacts", contactList);
+        if (contactPageOptional.isPresent()) {
+            Page<Contact> contactPage = contactPageOptional.get();
+            model.addAttribute("contacts", contactPage);
+            model.addAttribute("pageSize", PAGE_SIZE);
         }
         return "user/all_contacts";
     }
