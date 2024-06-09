@@ -83,7 +83,23 @@ public class ContactServiceImplementation implements ContactService {
     }
 
     @Override
-    public List<Contact> search(String name, String email, String phoneNumber) {
-        return null;
+    public Optional<Page<Contact>> searchByName(User user, String nameKeyword, int page, int size, String sortField, String direction) {
+        Sort sort = direction.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepository.findByUserAndNameContaining(user, nameKeyword, pageable);
+    }
+
+    @Override
+    public Optional<Page<Contact>> searchByEmail(User user, String emailKeyword, int page, int size, String sortField, String direction) {
+        Sort sort = direction.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepository.findByUserAndEmailContaining(user, emailKeyword, pageable);
+    }
+
+    @Override
+    public Optional<Page<Contact>> searchByPhoneNumber(User user, String phoneNumberKeyword, int page, int size, String sortField, String direction) {
+        Sort sort = direction.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        var pageable = PageRequest.of(page, size, sort);
+        return contactRepository.findByUserAndPhoneNumberContaining(user, phoneNumberKeyword, pageable);
     }
 }

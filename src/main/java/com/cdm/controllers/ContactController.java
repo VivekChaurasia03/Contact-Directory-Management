@@ -3,6 +3,7 @@ package com.cdm.controllers;
 import com.cdm.entities.Contact;
 import com.cdm.entities.User;
 import com.cdm.forms.ContactForm;
+import com.cdm.helpers.AppConstants;
 import com.cdm.helpers.EmailHelper;
 import com.cdm.helpers.Message;
 import com.cdm.helpers.MessageType;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -101,6 +103,39 @@ public class ContactController {
             model.addAttribute("pageSize", PAGE_SIZE);
         }
         return "user/all_contacts";
+    }
+
+    // Search Handler
+    @GetMapping("/search")
+    public String searchHandler(
+            @RequestParam("field") String field,
+            @RequestParam("keyword") String keyword,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortField", defaultValue = "name") String sortField,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            Model model,
+            Authentication authentication
+    ) {
+
+        // Load all the contacts using the provided userId
+        String userName = EmailHelper.getEmailOfLoggedInUser(authentication);
+        User user = userService.getUserByEmail(userName);
+
+        Optional<Page<Contact>> contactPageOptional = Optional.empty();
+        if(field.equalsIgnoreCase("name"))  contactPageOptional = contactService.searchByName(user, keyword, page, size, sortField, direction);
+        else if (field.equalsIgnoreCase( "email")) contactPageOptional = contactService.searchByEmail(user, keyword, page, size, sortField, direction);
+        else if (field.equalsIgnoreCase( "phone")) contactPageOptional = contactService.searchByPhoneNumber(user, keyword, page, size, sortField, direction);
+
+        logger.info("Contact Page {}", contactPageOptional);
+
+        if (contactPageOptional.isPresent()) {
+            Page<Contact> contactPage = contactPageOptional.get();
+            model.addAttribute("contacts", contactPage);
+            model.addAttribute("pageSize", PAGE_SIZE);
+        }
+
+        return "user/search";
     }
 
     private Contact getContactToSave(ContactForm contactForm, Authentication authentication) throws IOException {

@@ -27,7 +27,9 @@ public interface ContactService {
 
     List<Contact> getAllContacts();
 
-    List<Contact> search(String name, String email, String phoneNumber);
+    Optional<Page<Contact>> searchByName(User user, String nameKeyword, int page, int size, String sortField, String direction);
+    Optional<Page<Contact>> searchByEmail(User user, String emailKeyword, int page, int size, String sortField, String direction);
+    Optional<Page<Contact>> searchByPhoneNumber(User user, String phoneNumberKeyword, int page, int size, String sortField, String direction);
 
     // Add more methods related to user business logic
 }
