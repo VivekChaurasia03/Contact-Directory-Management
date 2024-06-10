@@ -3,6 +3,7 @@ package com.cdm.controllers;
 import com.cdm.entities.Contact;
 import com.cdm.entities.User;
 import com.cdm.forms.ContactForm;
+import com.cdm.forms.ContactSearchForm;
 import com.cdm.helpers.AppConstants;
 import com.cdm.helpers.EmailHelper;
 import com.cdm.helpers.Message;
@@ -101,6 +102,8 @@ public class ContactController {
             Page<Contact> contactPage = contactPageOptional.get();
             model.addAttribute("contacts", contactPage);
             model.addAttribute("pageSize", PAGE_SIZE);
+            model.addAttribute("contactSearchForm", new ContactSearchForm());
+
         }
         return "user/all_contacts";
     }
@@ -108,8 +111,7 @@ public class ContactController {
     // Search Handler
     @GetMapping("/search")
     public String searchHandler(
-            @RequestParam("field") String field,
-            @RequestParam("keyword") String keyword,
+            @ModelAttribute ContactSearchForm contactSearchForm,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "sortField", defaultValue = "name") String sortField,
@@ -117,6 +119,9 @@ public class ContactController {
             Model model,
             Authentication authentication
     ) {
+
+        String field = contactSearchForm.getField();
+        String keyword = contactSearchForm.getKeyword();
 
         // Load all the contacts using the provided userId
         String userName = EmailHelper.getEmailOfLoggedInUser(authentication);
@@ -133,6 +138,7 @@ public class ContactController {
             Page<Contact> contactPage = contactPageOptional.get();
             model.addAttribute("contacts", contactPage);
             model.addAttribute("pageSize", PAGE_SIZE);
+            model.addAttribute("contactSearchForm", contactSearchForm);
         }
 
         return "user/search";
