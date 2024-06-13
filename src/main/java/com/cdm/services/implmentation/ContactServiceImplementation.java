@@ -38,6 +38,8 @@ public class ContactServiceImplementation implements ContactService {
         foundedContact.setEmail(contact.getEmail());
         foundedContact.setPhoneNumber(contact.getPhoneNumber());
         foundedContact.setAddress(contact.getAddress());
+        foundedContact.setPicture(contact.getPicture());
+        foundedContact.setCloudinaryImagePublicId(contact.getCloudinaryImagePublicId());
         foundedContact.setDescription(contact.getDescription());
         foundedContact.setFavourite(contact.isFavourite());
         foundedContact.setWebsiteLink(contact.getWebsiteLink());

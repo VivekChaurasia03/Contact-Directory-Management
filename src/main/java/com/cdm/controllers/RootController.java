@@ -33,16 +33,18 @@ public class RootController {
 
     @ModelAttribute
     public void addLoggedInUserInformation(Model model, Authentication authentication) {
-        if(authentication == null) return;
-        logger.info("Triggered for all Reqs");
+        if (authentication == null) return;
+        // logger.info("Triggered for all Reqs");
         String userName = EmailHelper.getEmailOfLoggedInUser(authentication);
         User loggedInUser = userService.getUserByEmail(userName);
 
+        /*
         if (loggedInUser != null) {
             logger.info("The name of the user is {} and email is {}", loggedInUser.getName(), loggedInUser.getEmail());
         } else {
             logger.info("No user found with email {}", userName);
         }
+         */
 
         Optional<List<Contact>> contactListOptional = contactService.getContactByUser(loggedInUser);
         if (contactListOptional.isPresent()) {

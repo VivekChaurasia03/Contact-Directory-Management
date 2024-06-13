@@ -22,17 +22,17 @@ public class EmailHelper {
 
     private static String getEmailFromOAuth2Token(OAuth2AuthenticationToken oAuth2Token) {
         String provider = oAuth2Token.getAuthorizedClientRegistrationId().toUpperCase();
-        logger.info("Authorized Client Registration ID: {}", provider);
+        // logger.info("Authorized Client Registration ID: {}", provider);
 
         DefaultOAuth2User authenticatedUser = getAuthenticatedUser(oAuth2Token);
 
         return switch (provider) {
             case AppConstants.GOOGLE -> {
-                logger.info("Authenticated via Google");
+                // logger.info("Authenticated via Google");
                 yield Objects.requireNonNull(authenticatedUser.getAttribute("email"), "Google email is null");
             }
             case AppConstants.GITHUB -> {
-                logger.info("Authenticated via GitHub");
+                // logger.info("Authenticated via GitHub");
                 yield Objects.requireNonNullElse(
                         authenticatedUser.getAttribute("email"),
                         authenticatedUser.getAttribute("login") + "@gmail.com"

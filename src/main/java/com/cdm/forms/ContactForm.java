@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.SecondaryRow;
 import org.springframework.web.multipart.MultipartFile;
 
 @Setter
@@ -34,6 +33,9 @@ public class ContactForm {
 
     // Creating a custom annotation to validate the files - size, resolutions
     private MultipartFile contactImage;
+
+    // To view the image in the update contact form
+    public String picture;
 
     @NotBlank(message = "Contact Description is required")
     private String description;
