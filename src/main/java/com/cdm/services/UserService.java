@@ -14,6 +14,8 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
+    User getUserByToken(String token);
+
     void deleteUser(String userId);
 
     boolean isUserExist(String userId);

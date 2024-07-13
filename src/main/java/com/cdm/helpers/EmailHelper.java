@@ -52,4 +52,8 @@ public class EmailHelper {
     private static DefaultOAuth2User getAuthenticatedUser(OAuth2AuthenticationToken oAuth2Token) {
         return (DefaultOAuth2User) oAuth2Token.getPrincipal();
     }
+
+    public static String getLinkForEmailVerification(String emailToken) {
+        return "http://localhost:8081/auth/verify-email?token=" + emailToken;
+    }
 }

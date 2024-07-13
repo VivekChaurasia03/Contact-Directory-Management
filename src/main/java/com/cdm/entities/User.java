@@ -69,6 +69,8 @@ public class User implements UserDetails {
         return roleList.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
+    private String emailToken;
+
     // username == email for this project
     @Override
     public String getUsername() {

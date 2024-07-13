@@ -11,6 +11,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     // Extra DB related queries
     Optional<User> findByEmail(String email);
 
+    Optional<User> findByEmailToken(String token);
+
     // Custom query finder
     // Custom finder methods
 }
