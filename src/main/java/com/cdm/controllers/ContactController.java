@@ -69,7 +69,7 @@ public class ContactController {
     }
 
     @GetMapping
-    public String viewContacts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+    public String viewContacts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "7") int size,
                                @RequestParam(defaultValue = "name") String sortField,
                                @RequestParam(defaultValue = "asc") String direction, Model model,
                                Authentication authentication) {
