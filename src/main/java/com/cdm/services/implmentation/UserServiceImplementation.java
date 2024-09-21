@@ -1,11 +1,14 @@
 package com.cdm.services.implmentation;
 
 import com.cdm.entities.User;
+import com.cdm.helpers.Message;
+import com.cdm.helpers.MessageType;
 import com.cdm.helpers.AppConstants;
 import com.cdm.helpers.ResourceNotFoundException;
 import com.cdm.repositories.UserRepository;
 import com.cdm.services.EmailService;
 import com.cdm.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +36,7 @@ public class UserServiceImplementation implements UserService {
     private EmailService emailService;
 
     @Override
-    public User saveUser(User user) {
+    public User saveUser(User user, HttpSession session) {
         // Need to generate the userId and email verification token
         String userId = UUID.randomUUID().toString();
         String emailToken = UUID.randomUUID().toString();
@@ -49,7 +52,18 @@ public class UserServiceImplementation implements UserService {
         // Sending Link to User for verification
         String link = getLinkForEmailVerification(emailToken);
 
-        emailService.sendEmail(user.getEmail(), "Verify Account: Contact Directory Manager", link);
+        try {
+            // Try to send the email
+            emailService.sendEmail(user.getEmail(), "Verify Account: Contact Directory Manager", link);
+        } catch (Exception e) {
+            // A fallback message in the session
+            Message fallbackMessage = Message.builder()
+                    .content("This is a development environment. Only the email greycr80@gmail.com can be used for login/testing. Also you can login through services like google/github.")
+                    .type(MessageType.yellow)
+                    .build();
+            session.setAttribute("message", fallbackMessage);
+            return null;
+        }
 
         return userRepository.save(user);
     }

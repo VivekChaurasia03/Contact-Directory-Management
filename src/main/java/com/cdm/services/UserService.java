@@ -1,12 +1,14 @@
 package com.cdm.services;
 
 import com.cdm.entities.User;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User saveUser(User user);
+    User saveUser(User user, HttpSession session);
 
     Optional<User> getUserById(String userId);
 

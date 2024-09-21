@@ -15,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 
@@ -44,24 +43,6 @@ public class PageController {
         model.addAllAttributes(attributes);
         */
         return "home";
-    }
-
-    @GetMapping("/about")
-    public String about() {
-        System.out.println("About Page Handlers");
-        return "about";
-    }
-
-    @GetMapping("/services")
-    public String services() {
-        System.out.println("Services Page Handlers");
-        return "services";
-    }
-
-    @GetMapping("/contact")
-    public String contact() {
-        System.out.println("Contact Page Handlers");
-        return "contact";
     }
 
     @GetMapping("/login")
@@ -103,7 +84,11 @@ public class PageController {
         User userToSave = getUserToSave(userForm);
 
         // Save to dB
-        userService.saveUser(userToSave);
+        User savedUser = userService.saveUser(userToSave, session);
+
+        if (savedUser == null) {
+            return "register";
+        }
 
         // message = "Registration Successful"
         Message message = Message.builder().content("Registration Successful").type(MessageType.green).build();

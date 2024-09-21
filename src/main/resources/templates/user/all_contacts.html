@@ -50,7 +50,7 @@
                         <button type="button" onclick="exportData()" class="px-3 py-1.5 bg-blue-400 text-white rounded-lg">Export</button>
                     </div>
                 </div>
-                <table th:unless="${contacts.isEmpty()}"
+                <table id="contact-table" th:unless="${contacts.isEmpty()}"
                        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -135,10 +135,16 @@
         <div th:replace="~{user/contact_modal :: modal}"></div>
     </div>
 </div>
-<script th:src="@{'/js/contacts.js'}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
+<script data-th-src="@{'/js/contacts.js'}"></script>
 <script>
     function exportData() {
-        alert("Working!");
+        TableToExcel.convert(document.getElementById("contact-table"), {
+            name: "contacts.xlsx",
+            sheet: {
+                name: "Sheet 1",
+            },
+        });
     }
 </script>
 </body>
