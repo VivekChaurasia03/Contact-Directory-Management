@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:8081";
+const baseURL = "http://cdmv.us-east-1.elasticbeanstalk.com/";
 
 const viewContactModal = document.getElementById('view_contact_modal');
 

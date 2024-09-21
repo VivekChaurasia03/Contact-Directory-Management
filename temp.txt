@@ -1,19 +1,17 @@
-spring.config.import=file:env.properties
-
 spring.application.name=ContactDirectoryManager
 
-server.port=${APPLICATION_PORT}
+server.port=${PORT:8080}
 
 # MySQL database configurations
 # datasource url
-spring.datasource.url=${DB_DATABASE}
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:cdm}
 spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASSWORD}
 
 # JPA configurations
-spring.jpa.show-sql=true
+spring.jpa.show-sql=${SHOW_SQL:true}
 # for creating schemas and tables
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=${DDL_AUTO:update}
 spring.jpa.properties.hibernate.format_sql=true
 # The dialect is set automatically by reading the driver class name,
 # to manually set spring.jpa.properties.hibernate.dialect
@@ -54,3 +52,28 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 
 spring.mail.properties.domain.name=${DOMAIN_NAME}
+
+
+
+PORT=8080
+
+DEFAULT_PIC_URL=https://images.immediate.co.uk/production/volatile/sites/3/2023/01/Roblox-image-ID-list-gallery-1-16dd824.jpg?quality=90&webp=true&fit=420,280
+
+DB_DATABASE=jdbc:mysql://localhost:3306/cdm
+DB_USER=root
+DB_PASSWORD=root
+
+GOOGLE_CLIENT_ID=326072527319-gl6l6m3un6mda4gn3r4l7v57770oi2bv.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+GITHUB_CLIENT_ID=Iv23liqSvO7Oyfu3am7A
+GITHUB_CLIENT_SECRET=6c138272ee54c781da2cb3c419314b1c0fba5506
+
+CLOUDINARY_CLOUD_NAME=dsl6dkvp2
+CLOUDINARY_CLOUD_API_KEY=647715684637147
+CLOUDINARY_CLOUD_API_SECRET=-WTD0VetxAlezpsOap3KeYXiwOc
+
+SMTP_HOST=live.smtp.mailtrap.io
+SMTP_PORT=587
+SMTP_USERNAME=api
+SMTP_PASSWORD=faa5d9f35b1b3ff084b688bf2f4fa1bc
+DOMAIN_NAME=verify_cdm_account@demomailtrap.com
